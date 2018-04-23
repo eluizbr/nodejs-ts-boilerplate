@@ -1,0 +1,60 @@
+{
+  "name": "nodejs-ts",
+  "version": "2.0.0",
+  "description": "A simple boilerplate for NodeJS using Typescript projects",
+  "main": "index.js",
+  "license": "MIT",
+  "author": {
+    "name": "Emerson Luiz",
+    "email": "eluizbr@gmail.com",
+    "url": "https://github.com/eluizbr"
+  },
+  "engines": {
+    "node": "^9.5.0",
+    "npm": "5.6.0"
+  },
+  "scripts": {
+    "heroku-prebuild": "npm install --only=dev && node_modules/.bin/tsc -p . && npm run makeDevDoc",
+    "dev": "export NODE_ENV='devel' && nodemon --exec ts-node src/index.ts",
+    "prod": "export NODE_ENV='production' && nodemon --exec ts-node src/index.ts",
+    "build": "tsc -p . && apidoc -i src -o build/public/doc",
+    "buildTest": "tsc -p .",
+    "makeDoc": "node_modules/.bin/apidoc -i src -o src/public/doc",
+    "copyApp": "cd src/public && cp -rfv app ../../build/public",
+    "makeDevDoc": "node_modules/.bin/apidoc -i src -o build/public/doc && npm run copyApp && ls -lisa build/public/",
+    "start": "node build/index.js",
+    "test": "node_modules/.bin/mocha --opts src/test/mocha.opts",
+    "test:watch": "export PORT='3001' NODE_ENV='devel' && node_modules/.bin/mocha --opts src/test/mocha.opts --watch"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.1",
+    "@types/body-parser": "^1.16.8",
+    "@types/compression": "^0.0.36",
+    "@types/cors": "^2.8.3",
+    "@types/express": "^4.11.1",
+    "@types/express-jwt": "^0.0.38",
+    "@types/express-session": "^1.15.8",
+    "@types/helmet": "^0.0.37",
+    "@types/mongoose": "^5.0.7",
+    "@types/mongoose-unique-validator": "^1.0.1",
+    "@types/morgan": "^1.7.35",
+    "@types/node": "^9.4.7",
+    "@types/passport": "^0.4.3"
+  },
+  "dependencies": {
+    "apidoc": "^0.17.6",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.2",
+    "compression": "^1.7.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
+    "express-session": "^1.15.6",
+    "helmet": "^3.12.0",
+    "mongoose": "^5.0.11",
+    "mongoose-unique-validator": "^2.0.0",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "swagger-ui-express": "^3.0.0"
+  }
+}
