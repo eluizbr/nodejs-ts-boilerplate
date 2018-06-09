@@ -14,11 +14,12 @@ const userSchema: Schema = new Schema(userModel, { timestamps: true });
  * Hash password
  */
 userSchema.pre('save', function(next: NextFunction) {
+  const self: any = this;
   if (!this.isModified('password')) return next();
 
   genSalt(10, (err: Error, salt: any) => {
-    hash(this.password, salt, (err: Error, hash: string) => {
-      err ? next(err) : (this.password = hash);
+    hash(self.password, salt, (err: Error, hash: string) => {
+      err ? next(err) : (self.password = hash);
       next();
     });
   });
