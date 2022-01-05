@@ -1,0 +1,226 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Facily integrations - Vtex API",
+    "description": "O objetivo deste documento é auxiliar os clientes da Facily na execução de atividades oferecidas na integração com a Vtex. Este protocolo permite que você realize filtros e ordenações utilizando 'comandos' como select, filter, top, count, etc",
+    "contact": {
+      "email": "dev@faci.ly"
+    },
+    "license": {
+      "name": "Comercial",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api-integrations.faci.ly/vtex"
+    }
+  ],
+  "tags": [
+    {
+      "name": "vtex",
+      "description": "Todas as requisições da VTex"
+    }
+  ],
+  "paths": {
+    "/api/notification/": {
+      "post": {
+        "tags": [
+          "vtex"
+        ],
+        "summary": "Criação e atualização de produtos",
+        "description": "Cria/atualiza um produto no catálogo, a partir do body enviado pela vtex",
+        "responses": {
+          "200": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "An": {
+                      "type": "string",
+                      "example": "facilypartnerbr"
+                    },
+                    "DateModified": {
+                      "type": "string",
+                      "example": "2021-11-04T23:08:47.246Z"
+                    },
+                    "HasStockKeepingUnitModified": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "HasStockKeepingUnitRemovedFromAffiliate": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "IdAffiliate": {
+                      "type": "string",
+                      "example": "FMS"
+                    },
+                    "IdSku": {
+                      "type": "integer",
+                      "example": 12
+                    },
+                    "IsActive": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "PriceModified": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "ProductId": {
+                      "type": "integer",
+                      "example": 13
+                    },
+                    "StockModified": {
+                      "type": "boolean",
+                      "example": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/merchants/{merchants_id}/roducts/": {
+      "post": {
+        "tags": [
+          "vtex"
+        ],
+        "summary": "Importar produtos",
+        "description": "Importa os produtos de um merchant_id da Vtext para catálogo da Facily",
+        "operationId": "findPetsByStatus",
+        "parameters": [
+          {
+            "name": "merchants_id",
+            "in": "path",
+            "description": "ID do Merchant",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {},
+                      "example": "e63b3b20-2538-11ec-9621-0242ac130002"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/{merchants_id}/categories\"": {
+      "get": {
+        "tags": [
+          "vtex"
+        ],
+        "summary": "Listar categorias da Vtex",
+        "description": "Lista as categorias de um merchant_id na Vtex",
+        "operationId": "findaPetsByStatus",
+        "parameters": [
+          {
+            "name": "merchants_id",
+            "in": "path",
+            "description": "ID do Merchant",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "categories": {
+                          "type": "object",
+                          "properties": {
+                            "count": {
+                              "type": "integer",
+                              "example": 12
+                            },
+                            "items": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "category_name": {
+                                    "type": "string",
+                                    "example": "Informática"
+                                  },
+                                  "category_id": {
+                                    "type": "string",
+                                    "example": "2"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}
